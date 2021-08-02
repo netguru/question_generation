@@ -3,6 +3,10 @@ from setuptools import setup, find_packages
 with open("README.md", "r") as f:
     long_description = f.read()
 
+# read dependency requirements
+with open('requirements.txt', 'r') as f:
+    install_requires = f.read().splitlines()
+
 setup(
     name="question_generation",
     packages=find_packages(),
@@ -12,7 +16,7 @@ setup(
     author="Suraj Patil",
     author_email="surajp815@gmail.com",
     description="Question generation is the task of automatically generating questions from a text paragraph.",
-    install_requires=["transformers>=3.0.0", "nltk", "nlp>=0.2.0", "torch"],
+    install_requires=install_requires,
     python_requires=">=3.6",
     include_package_data=True,
     platforms="any",
