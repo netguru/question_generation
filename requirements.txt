@@ -3,3 +3,4 @@ nltk
 nlp>=0.2.0
 torch
 sentencepiece
+protobuf
