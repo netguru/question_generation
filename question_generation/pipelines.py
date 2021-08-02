@@ -90,6 +90,7 @@ class QGPipeline:
         dec = [self.ans_tokenizer.decode(ids, skip_special_tokens=False) for ids in outs]
         answers = [item.split('<sep>') for item in dec]
         answers = [i[:-1] for i in answers]
+        answers = [[answer[0].lstrip('<pad> ')] for answer in answers if len(answer)]
         
         return sents, answers
     
@@ -133,11 +134,14 @@ class QGPipeline:
         inputs = []
         for i, answer in enumerate(answers):
             if len(answer) == 0: continue
-            sent = sents[i]
+            sent = sents[i].lower()
             for answer_text in answer:
                 sents_copy = sents[:]
                 
-                answer_text = answer_text.strip()
+                answer_text = answer_text.strip().lower()
+
+                if answer_text not in sent:
+                    continue
                 
                 ans_start_idx = sent.index(answer_text)
                 
